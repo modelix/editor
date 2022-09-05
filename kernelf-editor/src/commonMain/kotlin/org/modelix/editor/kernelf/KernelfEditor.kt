@@ -15,14 +15,12 @@ package org.modelix.editor.kernelf
 
 import de.slisson.mps.richtext.L_de_slisson_mps_richtext
 import jetbrains.mps.lang.core.N_INamedConcept
-import org.iets3.core.expr.base.*
+import org.iets3.core.expr.base.L_org_iets3_core_expr_base
 import org.iets3.core.expr.simpleTypes.L_org_iets3_core_expr_simpleTypes
 import org.iets3.core.expr.tests.L_org_iets3_core_expr_tests
 import org.iets3.core.expr.toplevel.L_org_iets3_core_expr_toplevel
-import org.iets3.core.expr.toplevel.N_Constant
-import org.iets3.core.expr.toplevel.N_ConstantRef
+import org.modelix.editor.languageEditors
 import org.modelix.metamodel.GeneratedConcept
-import org.modelix.model.api.getReferenceTarget
 
 
 class KernelfEditor {
@@ -122,7 +120,7 @@ class KernelfEditor {
         }
         conceptEditor(language.NumberLiteral) {
             concept.value.cell {
-                validateValue { it.toBigDecimalOrNull() != null }
+                validateValue { it.toDoubleOrNull() != null }
             }
         }
         conceptEditor(language.TrueLiteral) {
@@ -140,7 +138,7 @@ class KernelfEditor {
             "[".cell()
             noSpace()
             concept.min.cell {
-                validateValue { it.toBigDecimalOrNull() != null }
+                validateValue { it.toDoubleOrNull() != null }
                 writeReplace { if (it.equals("-inf", ignoreCase = true)) "∞" else it.replace(",", ".") }
             }
             noSpace()

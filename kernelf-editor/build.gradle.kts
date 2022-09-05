@@ -38,7 +38,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("org.modelix:metamodel-runtime:$modelApiVersion")
+                implementation("org.modelix:metamodel-runtime:$modelApiVersion")
+                implementation(project(":editor-runtime"))
                 implementation(kotlin("stdlib-common"))
                 implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
@@ -94,7 +95,7 @@ val cleanGeneratedMetaModelSources = tasks.create("cleanGeneratedMetaModelSource
     }
 }
 
-tasks.matching { it.name.startsWith("compileKotlin") }.configureEach {
+tasks.matching { it.name.matches(Regex("""(.*compile.*Kotlin.*|.*[sS]ourcesJar.*)""")) }.configureEach {
     dependsOn(generateMetaModelSources)
 }
 
