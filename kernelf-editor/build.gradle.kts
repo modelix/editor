@@ -88,7 +88,17 @@ val generateMetaModelSources = tasks.create("generateMetaModelSources") {
     }
 }
 
-tasks.named("compileKotlinMetadata") {
+val cleanGeneratedMetaModelSources = tasks.create("cleanGeneratedMetaModelSources") {
+    doLast {
+        generatorOutputDir.deleteRecursively()
+    }
+}
+
+tasks.matching { it.name.startsWith("compileKotlin") }.configureEach {
     dependsOn(generateMetaModelSources)
+}
+
+tasks.named("clean") {
+    dependsOn(cleanGeneratedMetaModelSources)
 }
 
